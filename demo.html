@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>依赖于jQuery的表单验证</title>
+
+        <style media="screen">
+            /*控制提示文字*/
+            [data-error='false']{
+                display: none;
+            }
+            [data-error='true']{
+                display: block;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <div class="">
+            <!-- data-required 代表是必填的，和required配合使用，如果为空，错误提示的元素属性名和data-none的值对应 -->
+    		<!-- data-rules  代表有验证规则-->
+    		<!-- data-confirm 代表是重复填写的，命名规则是 confirm-'要重复的表单的data-rulse的值' -->
+            <form name="demo_form" novalidate>
+                <input type="text" name="username" placeholder="请输入用户名" data-required="noUsername" data-rules="username" pattern="^[\u4e00-\u9fa50-9A-Za-z_-]{2,20}$" required>
+                <input type="text" name="email" placeholder="请输入邮箱" data-required="noEmail" data-rules="email" pattern="^[0-9a-zA-Z_-.]+@(([0-9a-zA-Z]+)[.])+[a-z]{2,4}$" required>
+                <input type="password" name="password" placeholder="请输入密码(6~20位数字或字母)" data-required="noPassword" data-rules="password" pattern="^^[0-9A-Za-z]{6,20}$" required>
+                <input type="password" name="confirmPass" placeholder="请确认密码" data-required="noConfirmPass" data-confirm="password" required>
+                <input type="button" name="button" value="确定" id="button">
+                <p data-info="noUsername" data-error="false">请输入用户名</p>
+                <p data-info="noEmail" data-error="false">请输入邮箱</p>
+                <p data-info="noPassword" data-error="false">请输入密码</p>
+                <p data-info="noConfirmPass" data-error="false">请确认密码</p>
+                <p data-info="username" data-error="false">用户名格式错误</p>
+                <p data-info="email" data-error="false">邮箱格式错误</p>
+                <p data-info="password" data-error="false">密码格式错误</p>
+                <p data-info="confirm-password" data-error="false">两次密码不一致</p>
+            </form>
+        </div>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="H5F.js"></script>
+        <script type="text/javascript" src="jquery.validate.js"></script>
+        <script type="text/javascript">
+            (function(){
+                "use strict";
+
+                $(document).ready(function(){
+
+                    $("#button").click(function(){
+                        //
+                        jQuery().getForm("demo_form", function(){
+                            // 验证成功
+                            console.log("success!")
+
+                        }, function(){
+                            // 验证失败
+                            console.log("fail!")
+                        })
+
+                    })
+
+                })
+
+            }())
+        </script>
+    </body>
+</html>
